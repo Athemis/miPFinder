@@ -9,7 +9,12 @@ def readAnnotation(data,fastasplit):
 		proteinname = proteinname.split()
 		if len(proteinname) > 0:
 			proteinname = proteinname[0]
-			description = line[1]
+			# The description might be entirely missing just assume
+			# an empty description in this case
+			if len(line) > 1:
+				description = line[1]
+			else:
+				description = ""
 			if isinstance(proteinname,(list,int)):
 					for name in proteinname:
 							if name != '':
