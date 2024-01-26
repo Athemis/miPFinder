@@ -129,6 +129,69 @@ def readiPfam(FILE):
 	print('found',len(list(set(temp[0]))),'interaction domains in',FILE)
 	return temp
 
+def read3did(FILE):
+	output = [[],[]]
+	with open(FILE) as Input:
+		lines = Input.readlines()
+
+	max_index = len(lines)
+	current_index = 0
+	while current_index < max_index:
+		line = lines[current_index].strip('\n')
+		if line.startswith('#=ID'):
+			temp = line.split('\t')
+			pfam1 = temp[3].strip().replace('@Pfam', '').strip('(')
+			pfam2 = temp[4].strip().replace('@Pfam', '').strip(')')
+			if pfam1 == pfam2:
+				homotypic = True
+			else:
+				homotypic = False
+
+			same_entry = True
+			i = current_index
+			intrachain = False
+			interchain = False
+			while same_entry:
+				is3d = False
+				while is3d == False and i < max_index:
+					i += 1
+					next_line = lines[i].strip('\n')
+					if next_line.startswith('#=3D'):
+						is3d = True
+						temp = next_line.split('\t')
+						chain1 = temp[2][0].upper()
+						chain2 = temp[3][0].upper()
+						if chain1 == chain2:
+							intrachain = True
+						else:
+							interchain = True
+					elif next_line.startswith('//'):
+						same_entry = False
+						is3d = False
+						current_index = i + 1
+						break
+			interaction_type = None
+			if intrachain and interchain:
+				interaction_type = "both"
+			elif intrachain and not interchain:
+				interaction_type = "intrachain"
+			elif interchain and not intrachain:
+				interaction_type = "interchain"
+
+			if homotypic:
+				if interaction_type == "interchain" or interaction_type == "both":
+					output[0].append(pfam1)
+					output[1].append('homotypic')
+			else:
+				if interaction_type == "interchain" or interaction_type == "both":
+					output[0].append(pfam1)
+					output[1].append('heterotypic')
+					output[0].append(pfam2)
+					output[1].append('heterotypic')
+
+	print('found',len(list(set(output[0]))),'interaction domains in',FILE)
+	return output
+
 
 def readDOMTBL(data,ProteinGeneList,fastasplit,fastadb,evalueCUTOFF,cvalueCUTOFF,miPmaxlength):
 	Input = open(data,'r')

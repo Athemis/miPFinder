@@ -86,6 +86,7 @@ parser.add_argument('-H', '--hmm', dest='hmmPATH', default='', help='path/to/hmm
 parser.add_argument('-S', '--STRING', dest='STRINGdb', help='STRING v10 detailed protein interaction file. XXXX.protein.links.detailed.v10.txt, available at http://string-db.org/cgi/download.pl', type=isFile)
 parser.add_argument('-d', '--PfamA', dest='PfamAdb', help='Pfam-database.hmm, available at ftp://ftp.ebi.ac.uk/pub/databases/Pfam/', type=isFile)
 parser.add_argument('-i', '--iPfam', dest='iPfamdb', help='iPfam-database.tsv, available at http://www.ipfam.org/. Merge homodomain and heterodomain interaction file.', type=isFile)
+parser.add_argument('-3', '--3did', dest='3diddb', help='3did_flat.tsv, available at https://3did.irbbarcelona.org. Use flat interaction file of interacting domain pairs.', type=isFile)
 parser.add_argument('-M', '--maxMIPlength', dest='miPmaxlength', default=140, help='Maximum length of a microProtein in aminoacids [integer] (140)', type=isInt) 
 parser.add_argument('-A', '--minANCESTORlength', dest='ancestorminlength', default=250, help='Minimum length of a microProtein ancestor in aminoacids [integer] (250)', type=isInt) 
 parser.add_argument('-L', '--blastCUTOFF', dest='blastCUTOFF', default=1e-3, help='E-value cutoff for Blast search [0-1, float] (1e-3)', type=isFloat) 
@@ -126,7 +127,11 @@ if hmmscandb == None and PfamAdbPATH == None:
 iPfamdbPATH = args['iPfamdb']
 if iPfamdbPATH == None:
 	print('\nWARNING: iPfam database not specified, will not add domain interaction information\nRecommended: specify -i iPfam-database.tsv')	
-	
+
+diddbPATH = args['3diddb']
+if diddbPATH == None:
+	print('\nWARNING: 3did database not specified, will not add domain interaction information\nRecommended: specify -i 3did_flat.tsv')	
+
 if args['STRINGdb'] == None:
 	print('\nWARNING: STRING database not specified, will not add interaction information\nRecommended: specify -S STRING-database.txt')	
 
@@ -489,6 +494,8 @@ if args['STRINGdb'] != None:
 	STRINGinteractions = readSTRING(args['STRINGdb'],int(args['STRINGcolumn']),int(args['STRINGminscore']))
 if iPfamdbPATH != None:
 	iPfamDB = readiPfam(iPfamdbPATH)#[Pfam]
+elif diddbPATH != None:
+	iPfamDB = read3did(diddbPATH) # read 3did db file and output data equivalent to ipfam
 else:
 	iPfamDB = None
 if PfamAdbPATH != None and os.path.isfile(hmmscandb) == False:
