@@ -309,7 +309,7 @@ ancestorminlength = int(args["ancestorminlength"])
 if miPmaxlength >= ancestorminlength:
     print(
         "maximum allowed miP candidate length ("
-        + str(maxMIPlength)
+        + str(miPmaxlength)
         + ") is higher than ancestorminlength ("
         + str(ancestorminlength)
         + ")\nRequired: (max. miP length) < (min. ancestor length)"
