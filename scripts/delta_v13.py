@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # returns % blast hits for: (1) <=miPmaxlength, (2) miPmaxlength<x<ancestorminlength, (3) >=ancestorminlength
 def percentZones(hits, fastadb, miPmaxlength, ancestorminlength):
     length = []

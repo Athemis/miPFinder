@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # searches domains in big proteins that are hit by miPs
 import os, subprocess
 

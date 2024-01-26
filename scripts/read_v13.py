@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 def readAnnotation(data, fastasplit):
     temp = [[], []]
     Input = open(data)
