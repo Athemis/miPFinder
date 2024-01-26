@@ -1,5 +1,12 @@
 # -*- coding: cp1252 -*-
-import sys, os, datetime, subprocess, math, argparse, shutil
+import sys
+import os
+import logging
+import datetime
+import subprocess
+import math
+import argparse
+import shutil
 
 ######ARGUMENT PARSER & VERIFICATION
 os.environ["CYGWIN"] = "nodosfilewarning"  # avoid hmmer warnings
