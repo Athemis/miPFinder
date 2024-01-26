@@ -18,6 +18,7 @@ from scripts.read_v13 import (
     readBlastTAB,
     readProteinGeneList,
     readiPfam,
+    read3did,
     readDOMTBL,
     readSTRING,
 )
