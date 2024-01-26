@@ -8,9 +8,26 @@ import math
 import argparse
 import shutil
 
+#######GET SCRIPTS###########
+from scripts.alignments_v13 import ALIGNMENTRATING
+from scripts.splicevariants_v13 import splicevariantsSEQ
+from scripts.splitdb_v13 import splitdb
+from scripts.read_v13 import (
+    readAnnotation,
+    readFasta,
+    readBlastTAB,
+    readProteinGeneList,
+    readiPfam,
+    readDOMTBL,
+    readSTRING,
+)
+from scripts.delta_v13 import percentsmall, percentZones
+from scripts.domains_v13 import domains, domainOverlap
+
 ######ARGUMENT PARSER & VERIFICATION
 os.environ["CYGWIN"] = "nodosfilewarning"  # avoid hmmer warnings
 currentPATH = os.getcwd().replace("\\", "/")
+sys.path.append(currentPATH + "/scripts")
 
 
 def isFile(string):
@@ -384,23 +401,6 @@ try:
     cpucount = multiprocessing.cpu_count()
 except (ImportError, NotImplementedError):
     pass
-
-#######GET SCRIPTS###########
-sys.path.append(currentPATH + "/scripts")
-from alignments_v13 import ALIGNMENTRATING
-from splicevariants_v13 import splicevariantsSEQ
-from splitdb_v13 import splitdb
-from read_v13 import (
-    readAnnotation,
-    readFasta,
-    readBlastTAB,
-    readProteinGeneList,
-    readiPfam,
-    readDOMTBL,
-    readSTRING,
-)
-from delta_v13 import percentsmall, percentZones
-from domains_v13 import domains, domainOverlap
 
 ######FILES AND FOLDERS##########
 # BLAST
