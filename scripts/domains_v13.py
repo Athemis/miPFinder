@@ -52,7 +52,7 @@ def domainOverlap(mip, hits, FROM, TO, domainsDB, overlapCUTOFF, iPfamDB):
     groupsinteresting = ["439_3", "502_2", "126_3", "418_6", "62_4", "67_12"]
     temp = [[], []]  # [Pfam],[Pfam_name]
     printline = "\n" + mip
-    for i in range(len(hits)):
+    for i, hit in enumerate(hits):
         # get miphit coordinates
         mipcoordinates = []
         for j in range(int(FROM[i]), int(TO[i]) + 1):
@@ -60,12 +60,10 @@ def domainOverlap(mip, hits, FROM, TO, domainsDB, overlapCUTOFF, iPfamDB):
         # find hit domains
         domainFROM = []
         domainTO = []
-        if hits[i] in domainsDB[0]:  # if hit has domains
-            INDEX = domainsDB[0].index(hits[i])
-            printline += "\n" + hits[i] + "\t" + str(INDEX)
-            for j in range(
-                INDEX, INDEX + domainsDB[0].count(hits[i])
-            ):  # for each domain
+        if hit in domainsDB[0]:  # if hit has domains
+            INDEX = domainsDB[0].index(hit)
+            printline += "\n" + hit + "\t" + str(INDEX)
+            for j in range(INDEX, INDEX + domainsDB[0].count(hit)):  # for each domain
                 # get hits coordinates
                 hitcoordinates = []
                 printline += (
